@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Item</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<%- include("partials/header") %> 
+<div class="edit-form-wrapper">
+    <h2>Edit Item</h2>
+
+    <form action="/items/<%= item.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+
+        <label>Title:</label>
+        <input type="text" name="title" value="<%= item.title %>" required>
+
+        <label>User:</label>
+        <input type="text" name="user" value="<%= item.user %>" required>
+
+        <label for="condition">Condition:</label>
+        <select id="condition" name="condition" required>
+        <option value="Freshly Made" <%= item.condition === "Freshly Made" ? "selected" : "" %>>Freshly Made</option>
+        <option value="Organic" <%= item.condition === "Organic" ? "selected" : "" %>>Organic</option>
+        <option value="Sugar-Free" <%= item.condition === "Sugar-Free" ? "selected" : "" %>>Sugar-Free</option>
+        <option value="Handmade" <%= item.condition === "Handmade" ? "selected" : "" %>>Handmade</option>
+        <option value="Seasonal" <%= item.condition === "Seasonal" ? "selected" : "" %>>Seasonal</option>
+        </select>
+
+        <label>Price:</label>
+        <input type="number" name="price" step="0.01" value="<%= item.price %>" required>
+
+        <label>Details:</label>
+        <textarea name="details"><%= item.details %></textarea>
+
+        <label>Upload Image:</label>
+        <input type="file" name="image" accept="image/*">
+
+        <button type="submit" class="update-btn">Update Item</button>
+    </form>
+</div>
+<%- include("partials/footer") %>
+</body>
+</html>

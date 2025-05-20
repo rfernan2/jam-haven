@@ -1,0 +1,46 @@
+<%- include('../partials/header') %>
+
+<div class="listing-wrapper">
+  <h2 class="listing-title">My Jam Listings</h2>
+
+  <table class="listing-table">
+    <thead>
+      <tr>
+        <th>Jam</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (items.length > 0) { %>
+        <% items.forEach(item => { %>
+          <tr>
+            <td><a href="/items/<%= item._id %>"><%= item.title %></a></td>
+            <td><%= item.active ? 'active' : 'inactive' %></td>
+            <td>
+              <div class="action-buttons">
+                <form action="/items/<%= item._id %>/edit" method="get">
+                  <button class="edit-btn" type="submit"><i class="fas fa-pen-to-square"></i></button>
+                </form>
+                <form action="/items/<%= item._id %>?_method=DELETE" method="post">
+                  <button class="delete-btn" type="submit"><i class="fas fa-trash-alt"></i></button>
+                </form>
+                <a href="/items/<%= item._id %>/offers"
+                   class="view-btn"
+                   <% if (item.totalOffers === 0) { %> disabled style="pointer-events: none;" <% } %>>
+                  <i class="fas fa-eye"></i> View Offers
+                </a>
+              </div>
+            </td>
+          </tr>
+        <% }) %>
+      <% } else { %>
+        <tr>
+          <td colspan="3">No jam listings yet. Start selling!</td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('../partials/footer') %>

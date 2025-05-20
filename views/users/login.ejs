@@ -1,0 +1,31 @@
+<%- include('../partials/header') %>
+
+<main class="form-container">
+  <h2 class="signup-title">Login</h2>
+
+  <% if (errorMessages && errorMessages.length > 0) { %>
+  <% errorMessages.forEach(msg => { %>
+    <div class="flash error"><%= msg %></div>
+  <% }) %>
+<% } %>
+
+<% if (successMessages && successMessages.length > 0) { %>
+  <% successMessages.forEach(msg => { %>
+    <div class="flash success"><%= msg %></div>
+  <% }) %>
+<% } %>
+
+  
+  
+  <form action="/users/login" method="POST">
+    <label for="email">Email:</label>
+    <input type="email" name="email" required>
+
+    <label for="password">Password:</label>
+    <input type="password" name="password" required>
+
+    <button type="submit">Login</button>
+  </form>
+</main>
+
+<%- include('../partials/footer') %>

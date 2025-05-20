@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Item</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+
+<%- include("partials/header") %> 
+
+<main>
+    <div class="item-detail">
+        <img src="<%= item.image %>" alt="<%= item.title %>">
+        <div>
+            <h1><%= item.title %></h1>
+            <p><strong>Condition:</strong> <%= item.condition %></p>
+            <p><strong>Price:</strong> $<%= item.price.toFixed(2) %></p>
+            <p><strong>Details:</strong> <%= item.details %></p>
+            <p><strong>Seller:</strong> <%= item.user.firstName %> <%= item.user.lastName %></p>
+            <p><strong>Total Offers:</strong> <%= item.totalOffers %></p>
+            <% if (item.active && item.totalOffers > 0) { %>
+              <p><strong>Highest Offer:</strong> $<%= item.highestOffer.toFixed(2) %></p>
+          <% } %>
+          
+
+            <% if (!currentUser) { %>
+                <p style="color: gray;">Please <a href="/users/login">log in</a> to make an offer.</p>
+              <% } else if (item.active && currentUser._id.toString() !== item.user._id.toString()) { %>
+                <form action="/items/<%= item._id %>/offers" method="POST">
+                  <input type="number" name="amount" step="0.01" required placeholder="Enter offer amount">
+                  <button type="submit" class="make-offer-btn">Make an Offer</button>
+                </form>
+              <% } else if (item.active) { %>
+                <p style="color: gray;">You can’t make an offer on your own item.</p>
+              <% } else { %>
+                <p style="color: red;">Unfortunately, this jam is no longer available.</p>
+              <% } %>
+              
+            
+                          
+            
+            <div class="back-container">
+                <button onclick="window.history.back()" class="back-button">Back</button>
+            </div>
+            
+        </div>    
+    </div>
+</main>
+
+<%- include("partials/footer") %>
+</body>
+</html>
